@@ -1,0 +1,55 @@
+﻿@model PhoneGame.Models.Session
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Session Code : <b>@Model.Id</b></h2>
+
+<div>    
+    <div class="row">        
+        <div class="col-md-4">
+            <h4>Ready: @Html.DisplayFor(model => model.Ready)</h4>
+        </div>
+    </div>
+           
+    <div id="divUserSur">
+    <div id="divUsers"></div>
+        </div>
+    <div id="divQuestion"></div>
+    <button id="btnGetQuestion">Question</button>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+
+<script>     
+        
+    
+        $(document).ready(function () {
+            //Contact Refresh Loop
+            setInterval(function () {
+
+                //CheckIfReady
+                
+
+                //GetUserList
+                $("#divUsers").load("/Sessions/GetUsers",
+                    { id: @Model.Id });
+            }
+                , 1000)
+
+
+            $("#btnGetQuestion").click(function () {
+                $("#divUserSur").remove();
+                $("#divQuestion").load("/Sessions/GetQuestion", { id: @Model.Id });
+            })
+
+        });
+    
+
+    
+    
+</script>
+

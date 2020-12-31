@@ -1,0 +1,44 @@
+﻿@model PhoneGame.Models.Session
+
+@{
+    ViewData["Title"] = "Game";
+}
+
+<h2>Game</h2>
+
+<div>
+    <h4>Waiting For All Players...</h4>
+    <hr />
+    <div class="jumbotron">
+        <h2>Join Code:   <b>@Html.DisplayFor(model => model.Id)</b></h2>
+    </div>
+    <button id="btnReady" class="btn btn-danger jumbotron">
+        <h2>Ready:   </h2>
+        <b id="ReadyCheck">@Html.DisplayFor(model => model.Ready)</b>
+    </button>
+    <div id="divload"></div>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+<script>
+    
+    $(document).ready(function () {
+        $("#btnReady").click(function () {    
+            $.ajax({
+                type: "POST",
+                url: "/Users/ReadyUp",
+                data: { "id": @Model.Id},
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    //alert("Request: " + XMLHttpRequest.toString() + "\n\nStatus: " + textStatus + "\n\nError: " + errorThrown);
+                },
+                complete: function (jqXHR, status) {
+                    //$("#ReadyCheck").html() = "No";
+                }
+            });
+    });
+    
+        
+    });
+</script>
